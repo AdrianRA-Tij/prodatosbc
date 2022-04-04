@@ -3,7 +3,7 @@
 @section('content')
 <div>
     <div class="SeguimientoAcomodo, SeguimientoCentrado" style="margin: 20px;">
-   
+
         @php
         $boton = 0
         @endphp
@@ -28,9 +28,7 @@
             @endif
         @endforeach
     </div>
-    @if (!empty($archivos))
     @yield('Evidencias_Sujeto_Obligado_Eje')
-    @endif
 </div>
 
 

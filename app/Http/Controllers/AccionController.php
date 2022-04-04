@@ -47,9 +47,9 @@ class AccionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:accions'],
+            'name' => ['required', 'string', 'max:500', 'unique:accions'], //'max:255',
             'estrategia_id' => ['required'],
-        ],[ 
+        ],[
              'estrategia_id.required' => 'El campo línea estratégica es obligatorio',
              'name.unique' => 'La línea de acción ya existe'
         ]);
@@ -71,7 +71,7 @@ class AccionController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**
@@ -96,12 +96,12 @@ class AccionController extends Controller
     public function update(Request $request, Accion $accion)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'max:500', 'string'], //, 'max:255'
             'estrategia_id' => ['required'],
-        ],[ 
+        ],[
              'estrategia_id.required' => 'El campo línea estratégica es obligatorio'
         ]);
-        
+
         $accion->update([
             'name' => request('name'),
             'description' => request('description'),
@@ -120,7 +120,7 @@ class AccionController extends Controller
      */
     public function destroy(Request $request, $accion_id)
     {
-        
+
         $accion = Accion::find($accion_id); //Encuentra el dato con el id
         $accion->delete();
         return back()->with('status_delete', 'Eliminado con éxito');

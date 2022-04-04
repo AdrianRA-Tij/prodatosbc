@@ -22,7 +22,7 @@ use Illuminate\Validation\Rule;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Dompdf\Dompdf; // Descargado composer require dompdf/dompdf
 use Dompdf\Options;
-// $options = $dompdf->getOptions(); 
+// $options = $dompdf->getOptions();
 //         $options->set(array('isRemoteEnabled' => true));
 //         $dompdf->setOptions($options);
 class UserController extends Controller
@@ -189,127 +189,192 @@ class UserController extends Controller
         return view('administrador.sujetos.SeguimientoSujeto', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'supereje' => $datos_eje, 'archivos' => NULL], compact('user'));
     }
     //Muestra acciones
+    // public function seguimiento_eje(Request $request, User $user, Eje $eje) {
+    //     $ejes = Eje::all();
+    //     /*$acciones_1 = DB::select('SELECT e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state, e5.archive FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
+    //     (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user->id, 'EjId' => $eje->id]);
+    //
+    //     $acciones = array();
+    //
+    //     foreach($acciones_1 as $prueba) {
+    //         array_push($acciones, array('Id' => (int)$prueba->id, 'Nombre' => (string)$prueba->name, 'Plan_Accion' => (string)$prueba->action_plan, 'Fecha_Implementacion' => (string)$prueba->date_implementation, 'Estado' => (boolean)$prueba->state, 'Registro' => (string)$prueba->archive));
+    //     }*/
+    //     //Input::get('datapack'));
+    //     $compromisos =null;
+    //     if ($request->input('datapack') == "normal") {
+    //
+    //     }
+    //     else if ($request->input('datapack') == "regreso") {
+    //         //$compromisos =  Compromiso::where('id', $request->input('analisis_accion'))->get(); Separa el objeto de los nuevos campos, no puede haber save ni update
+    //         $compromisos = Compromiso::find($request->input('analisis_accion')); // Acepta cambios en Save
+    //         if ($request->input('Campo') == "Incompleto"){
+    //             $compromisos->state = 0;
+    //             $compromisos->detail = "Incompleto";
+    //         }
+    //         else {
+    //             $compromisos->state = 1;
+    //             $compromisos->detail = "Aceptado";
+    //         }
+    //         $compromisos->comment = $request->input('Text1');
+    //         //dd($compromisos);
+    //         $compromisos->save();
+    //     }
+    //
+    //
+    //     $acciones = array();
+    //     $txt1 = "";
+    //     if ($request->input('campox') == "Todo") {
+    //         //
+    //         $acciones_1 = DB::select('SELECT e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state, e5.archive, e5.detail FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
+    //         (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user->id, 'EjId' => $eje->id]);
+    //
+    //         $acciones = array();
+    //
+    //         foreach($acciones_1 as $prueba) {
+    //             array_push($acciones, array('Id' => (int)$prueba->id, 'Nombre' => (string)$prueba->name, 'Plan_Accion' => (string)$prueba->action_plan, 'Fecha_Implementacion' => (string)$prueba->date_implementation, 'Estado' => (boolean)$prueba->state, 'Registro' => (string)$prueba->archive, 'Detalle' => (string)$prueba->detail));
+    //         }
+    //     }
+    //     else if ($request->input('campox') == "Sin Revision") {
+    //
+    //         $txt1 = "Aceptado";
+    //         $txt2 = "Incompleto"; // <=> es !=
+    //         $acciones_1 = DB::select('SELECT e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state, e5.archive, e5.detail FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
+    //         (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (e5.detail IS NULL) && (e5.archive IS NOT NULL) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user->id, 'EjId' => $eje->id]);
+    //         $acciones = array();
+    //
+    //         foreach($acciones_1 as $prueba) {
+    //             array_push($acciones, array('Id' => (int)$prueba->id, 'Nombre' => (string)$prueba->name, 'Plan_Accion' => (string)$prueba->action_plan, 'Fecha_Implementacion' => (string)$prueba->date_implementation, 'Estado' => (boolean)$prueba->state, 'Registro' => (string)$prueba->archive, 'Detalle' => (string)$prueba->detail));
+    //         }
+    //         //dd($txt1, $acciones);
+    //     }
+    //     else if ($request->input('campox') == "Incompleto") {
+    //         $txt1 = "Incompleto";
+    //         $acciones_1 = DB::select('SELECT e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state, e5.archive, e5.detail  FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
+    //         (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (e5.detail = :txt1) && (:SujId = e4.id && :EjId = e1.id)', ['txt1' => $txt1, 'SujId' => $user->id, 'EjId' => $eje->id]);
+    //
+    //         $acciones = array();
+    //
+    //         foreach($acciones_1 as $prueba) {
+    //             array_push($acciones, array('Id' => (int)$prueba->id, 'Nombre' => (string)$prueba->name, 'Plan_Accion' => (string)$prueba->action_plan, 'Fecha_Implementacion' => (string)$prueba->date_implementation, 'Estado' => (boolean)$prueba->state, 'Registro' => (string)$prueba->archive, 'Detalle' => (string)$prueba->detail));
+    //         }
+    //     }
+    //     else if ($request->input('campox') == "Aceptado") {
+    //         $txt1 = "Aceptado";
+    //         $acciones_1 = DB::select('SELECT e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state, e5.archive, e5.detail  FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
+    //         (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (e5.detail = :txt1) && (:SujId = e4.id && :EjId = e1.id)', ['txt1' => $txt1, 'SujId' => $user->id, 'EjId' => $eje->id]);
+    //
+    //         $acciones = array();
+    //
+    //
+    //         foreach($acciones_1 as $prueba) {
+    //             array_push($acciones, array('Id' => (int)$prueba->id, 'Nombre' => (string)$prueba->name, 'Plan_Accion' => (string)$prueba->action_plan, 'Fecha_Implementacion' => (string)$prueba->date_implementation, 'Estado' => (boolean)$prueba->state, 'Registro' => (string)$prueba->archive, 'Detalle' => (string)$prueba->detail));
+    //         }
+    //     }
+    //
+    //     $plantilla = "Seguimiento Sujeto";
+    //     return view('administrador.sujetos.SeguimientoSujetoEje', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'supereje' => $eje, 'acciones' => $acciones, 'archivos' => NULL]);
+    // }
+    //Muestra los archivos relacionados con las acciones que a su vez que relacionan con las estrategias y estas con los ejes
     public function seguimiento_eje(Request $request, User $user, Eje $eje) {
-        $ejes = Eje::all();
-        /*$acciones_1 = DB::select('SELECT e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state, e5.archive FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-        (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user->id, 'EjId' => $eje->id]);
+        $usuario = $user->id;
+        $ejes = Eje::All();
+        $estrategias = Estrategia::where('eje_id', $eje->id)->get();
+        $acciones = Accion::all();
+        $plantilla = "Seguimiento Sujeto";
 
-        $acciones = array();
-
-        foreach($acciones_1 as $prueba) {
-            array_push($acciones, array('Id' => (int)$prueba->id, 'Nombre' => (string)$prueba->name, 'Plan_Accion' => (string)$prueba->action_plan, 'Fecha_Implementacion' => (string)$prueba->date_implementation, 'Estado' => (boolean)$prueba->state, 'Registro' => (string)$prueba->archive));
-        }*/
-        //Input::get('datapack'));
-        $compromisos =null;
-        if ($request->input('datapack') == "normal") {
-
-        }
-        else if ($request->input('datapack') == "regreso") {
-            //$compromisos =  Compromiso::where('id', $request->input('analisis_accion'))->get(); Separa el objeto de los nuevos campos, no puede haber save ni update
-            $compromisos = Compromiso::find($request->input('analisis_accion')); // Acepta cambios en Save
-            if ($request->input('Campo') == "Incompleto"){
-                $compromisos->state = 0;
-                $compromisos->detail = "Incompleto";
-            }
-            else {
-                $compromisos->state = 1;
-                $compromisos->detail = "Aceptado";
-            }
-            $compromisos->comment = $request->input('Text1');
-            //dd($compromisos);
-            $compromisos->save();
-        }
-
-
-        $acciones = array();
-        $txt1 = "";
         if ($request->input('campox') == "Todo") {
-            //
-            $acciones_1 = DB::select('SELECT e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state, e5.archive, e5.detail FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-            (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user->id, 'EjId' => $eje->id]);
-
-            $acciones = array();
-
-            foreach($acciones_1 as $prueba) {
-                array_push($acciones, array('Id' => (int)$prueba->id, 'Nombre' => (string)$prueba->name, 'Plan_Accion' => (string)$prueba->action_plan, 'Fecha_Implementacion' => (string)$prueba->date_implementation, 'Estado' => (boolean)$prueba->state, 'Registro' => (string)$prueba->archive, 'Detalle' => (string)$prueba->detail));
-            }
+            $compromisos = Compromiso::where('user_id', $usuario)->get();
         }
         else if ($request->input('campox') == "Sin Revision") {
-
-            $txt1 = "Aceptado";
-            $txt2 = "Incompleto"; // <=> es !=
-            $acciones_1 = DB::select('SELECT e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state, e5.archive, e5.detail FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-            (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (e5.detail IS NULL) && (e5.archive IS NOT NULL) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user->id, 'EjId' => $eje->id]);
-            $acciones = array();
-
-            foreach($acciones_1 as $prueba) {
-                array_push($acciones, array('Id' => (int)$prueba->id, 'Nombre' => (string)$prueba->name, 'Plan_Accion' => (string)$prueba->action_plan, 'Fecha_Implementacion' => (string)$prueba->date_implementation, 'Estado' => (boolean)$prueba->state, 'Registro' => (string)$prueba->archive, 'Detalle' => (string)$prueba->detail));
-            }
-            //dd($txt1, $acciones);
+            $compromisos = Compromiso::where('user_id', $usuario)->where('state', 1)->where('detail', null)->get();
         }
         else if ($request->input('campox') == "Incompleto") {
-            $txt1 = "Incompleto";
-            $acciones_1 = DB::select('SELECT e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state, e5.archive, e5.detail  FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-            (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (e5.detail = :txt1) && (:SujId = e4.id && :EjId = e1.id)', ['txt1' => $txt1, 'SujId' => $user->id, 'EjId' => $eje->id]);
-
-            $acciones = array();
-
-            foreach($acciones_1 as $prueba) {
-                array_push($acciones, array('Id' => (int)$prueba->id, 'Nombre' => (string)$prueba->name, 'Plan_Accion' => (string)$prueba->action_plan, 'Fecha_Implementacion' => (string)$prueba->date_implementation, 'Estado' => (boolean)$prueba->state, 'Registro' => (string)$prueba->archive, 'Detalle' => (string)$prueba->detail));
-            }
+            $compromisos = Compromiso::where('user_id', $usuario)->where('state', 1)->where('detail', 'Incompleto')->get();
         }
         else if ($request->input('campox') == "Aceptado") {
-            $txt1 = "Aceptado";
-            $acciones_1 = DB::select('SELECT e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state, e5.archive, e5.detail  FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-            (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (e5.detail = :txt1) && (:SujId = e4.id && :EjId = e1.id)', ['txt1' => $txt1, 'SujId' => $user->id, 'EjId' => $eje->id]);
-
-            $acciones = array();
-
-
-            foreach($acciones_1 as $prueba) {
-                array_push($acciones, array('Id' => (int)$prueba->id, 'Nombre' => (string)$prueba->name, 'Plan_Accion' => (string)$prueba->action_plan, 'Fecha_Implementacion' => (string)$prueba->date_implementation, 'Estado' => (boolean)$prueba->state, 'Registro' => (string)$prueba->archive, 'Detalle' => (string)$prueba->detail));
-            }
+            $compromisos = Compromiso::where('user_id', $usuario)->where('state', 1)->where('detail', 'Aceptado')->get();
         }
 
-        $plantilla = "Seguimiento Sujeto";
-        return view('administrador.sujetos.SeguimientoSujetoEje', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'supereje' => $eje, 'acciones' => $acciones, 'archivos' => NULL]);
+        return view('administrador.sujetos.SeguimientoSujetoEje', ['usuario' => $user, 'user' => $usuario, 'plantilla' => $plantilla, 'ejes' => $ejes, 'supereje' => $eje, 'estrategias' => $estrategias, 'acciones' => $acciones, 'compromisos' => $compromisos]);
+
     }
-    //Muestra los archivos relacionados con las acciones que a su vez que relacionan con las estrategias y estas con los ejes
-    public function seguimiento_eje_accion(Request $request, User $user, Eje $eje, Accion $accion) {
-        $ejes = Eje::all();
-        $txt1 = "";
+    // public function seguimiento_eje_accion(Request $request, User $user, Eje $eje, Accion $accion) {
+    //     $ejes = Eje::all();
+    //     $txt1 = "";
+    //     $pesox = 0;
+    //     $pesof = 0;
+    //     $subfijo = "bytes";
+    //     //
+    //     $acciones_1 = DB::select('SELECT e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
+    //     (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user->id, 'EjId' => $eje->id]);
+    //
+    //
+    //     $acciones = array();
+    //     $archivos = array();
+    //
+    //     foreach($acciones_1 as $prueba) {
+    //         array_push($acciones, array('Id' => (int)$prueba->id, 'Nombre' => (string)$prueba->name, 'Plan_Accion' => (string)$prueba->action_plan, 'Fecha_Implementacion' => (string)$prueba->date_implementation, 'Estado' => (boolean)$prueba->state));
+    //     }
+    //
+    //     $archivos_1 = DB::select('SELECT  e5.archive, e5.date_implementation, e5.id, e5.detail, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
+    //     (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.Id && :EjId = e1.Id && :AcId = e3.Id)', ['SujId' => $user->id, 'EjId' => $eje->id, 'AcId' => $accion->id]);
+    //
+    //     foreach($archivos_1 as $prueba2) { // Añadir Detalle en archivos
+    //         if ($prueba2->archive != NULL) {
+    //             $pesox = Storage::disk('compromisos')->size($prueba2->archive);
+    //             if ($pesox > 0) {
+    //                 if ($pesox < 1024) { $subfijo = "bytes"; }
+    //                 else if ($pesox < 1024*1024) { $subfijo = "KB"; $pesof = $pesox/1024; }
+    //                 else if ($pesox < 1024*1024*1024) { $subfijo = "MB"; $pesof = $pesox/1024/1024; }
+    //                 else if ($pesox < 1024*1024*1024*1024) { $subfijo = "GB"; $pesof = $pesox/1024/1024/1024; }
+    //             }
+    //             array_push($archivos, array('Archivo' => (string)$prueba2->archive, 'Fecha' => (string)$prueba2->date_implementation, 'Registro' => (string)$prueba2->id, 'Detalle' => (string)$prueba2->detail, 'Estado' => (string)$prueba2->state, 'Peso' => (string)(round($pesof,2) . " " . $subfijo)));
+    //         }
+    //     }
+    //
+    //     $plantilla = "Seguimiento Sujeto";
+    //
+    //     return view('administrador.sujetos.SeguimientoSujetoEjeAccion', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'supereje' => $eje, 'acciones' => $acciones, 'archivos' => $archivos]);
+    // }
+
+    public function seguimiento_eje_accion(Request $request,User $user, Eje $eje, Compromiso $compromiso) {
+        $peso = "";
         $pesox = 0;
         $pesof = 0;
         $subfijo = "bytes";
-        //
-        $acciones_1 = DB::select('SELECT e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-        (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user->id, 'EjId' => $eje->id]);
 
-
-        $acciones = array();
-        $archivos = array();
-
-        foreach($acciones_1 as $prueba) {
-            array_push($acciones, array('Id' => (int)$prueba->id, 'Nombre' => (string)$prueba->name, 'Plan_Accion' => (string)$prueba->action_plan, 'Fecha_Implementacion' => (string)$prueba->date_implementation, 'Estado' => (boolean)$prueba->state));
-        }
-
-        $archivos_1 = DB::select('SELECT  e5.archive, e5.date_implementation, e5.id, e5.detail, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-        (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.Id && :EjId = e1.Id && :AcId = e3.Id)', ['SujId' => $user->id, 'EjId' => $eje->id, 'AcId' => $accion->id]);
-
-        foreach($archivos_1 as $prueba2) { // Añadir Detalle en archivos
-            $pesox = Storage::disk('compromisos')->size($prueba2->archive);
+        if ($compromiso->archive != NULL) {
+            $pesox = Storage::disk('compromisos')->size($compromiso->archive);
             if ($pesox > 0) {
                 if ($pesox < 1024) { $subfijo = "bytes"; }
                 else if ($pesox < 1024*1024) { $subfijo = "KB"; $pesof = $pesox/1024; }
                 else if ($pesox < 1024*1024*1024) { $subfijo = "MB"; $pesof = $pesox/1024/1024; }
                 else if ($pesox < 1024*1024*1024*1024) { $subfijo = "GB"; $pesof = $pesox/1024/1024/1024; }
             }
-            array_push($archivos, array('Archivo' => (string)$prueba2->archive, 'Fecha' => (string)$prueba2->date_implementation, 'Registro' => (string)$prueba2->id, 'Detalle' => (string)$prueba2->detail, 'Estado' => (string)$prueba2->state, 'Peso' => (string)(round($pesof,2) . " " . $subfijo)));
+          $peso = (string)(round($pesof,2) . " " . $subfijo);
+        }
+
+        //logica para guardar el estado y detalle de un compromiso
+        if ($request->input('datapack') == "normal") {
+        }
+        else if ($request->input('datapack') == "regreso") {
+            //$compromisos =  Compromiso::where('id', $request->input('analisis_accion'))->get(); Separa el objeto de los nuevos campos, no puede haber save ni update
+            $compromiso = Compromiso::find($request->input('analisis_accion')); // Acepta cambios en Save
+            if ($request->input('Campo') == "Incompleto"){
+                $compromiso->detail = "Incompleto";
+            }
+            else {
+                $compromiso->state = 1;
+                $compromiso->detail = "Aceptado";
+            }
+            $compromiso->comment = $request->input('Text1');
+            //dd($compromisos);
+            $compromiso->save();
         }
 
         $plantilla = "Seguimiento Sujeto";
 
-        return view('administrador.sujetos.SeguimientoSujetoEjeAccion', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'supereje' => $eje, 'acciones' => $acciones, 'archivos' => $archivos]);
+        return view('administrador.sujetos.SeguimientoSujetoEjeAccion', ['usuario' => $user, 'supereje' => $eje, 'compromiso' => $compromiso, 'plantilla' => $plantilla, 'peso' => $peso]);
     }
 
     public function evidencias_sujeto(){
@@ -318,35 +383,46 @@ class UserController extends Controller
         $plantilla = "Evidencias Sujeto";
         return view('sujeto.EvidenciasSujeto', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'acciones' => NULL, 'archivos' => NULL]);
     }
+    // public function evidencias_sujeto_eje(Eje $eje){
+    //     $ejes = Eje::all();
+    //     $user = Auth::user()->id;
+    //     $acciones_1 = DB::select('SELECT e5.id as Id2, e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
+    //     (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user, 'EjId' => $eje->id]);
+    //
+    //     $acciones = array();
+    //     $archivos = array();
+    //
+    //     foreach($acciones_1 as $prueba) {
+    //         array_push($acciones,array("Id2" => $prueba->Id2, "Id" => $prueba->id, "Nombre" => $prueba->name, "Plan_Accion" => $prueba->action_plan, "Fecha_Entrega" => $prueba->date_implementation, "Estado" => $prueba->state));
+    //     }
+    //     foreach($acciones_1 as $accion) {
+    //         $archivos_1 = DB::select('SELECT e5.id as Id2, e3.id, e5.archive, e5.date_implementation, e5.comment, e5.detail, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
+    //         (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id && :AcId = e3.id)', ['SujId' => $user, 'EjId' => $eje->id,'AcId' => $accion->id]);
+    //
+    //
+    //         foreach($archivos_1 as $prueba2) {
+    //             //dd((string)$prueba2->Id2, (string)$prueba2->id, (string)$prueba2->archive, (string)$prueba2->date_implementation);
+    //             array_push($archivos, array('Id2' => (string)$prueba2->Id2, 'Id' => (string)$prueba2->id, 'Archivo' => (string)$prueba2->archive, 'Fecha' => (string)$prueba2->date_implementation,'Comentario' => (string)$prueba2->comment, 'Detalle' => (string)$prueba2->detail, 'Estado' => (string)$prueba2->state));
+    //         }
+    //     }
+    //
+    //
+    //     //dd($acciones, $archivos);
+    //     $plantilla = "Evidencias Sujeto";
+    //     return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'supereje' => $eje, 'acciones' => $acciones, 'archivos' => $archivos]);
+    // }
+
     public function evidencias_sujeto_eje(Eje $eje){
+        // $user = User::where('id', $id)->first();
+        $user = Auth::user()->id;
         $ejes = Eje::all();
-          $user = Auth::user()->id;
-        $acciones_1 = DB::select('SELECT e5.id as Id2, e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-        (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user, 'EjId' => $eje->id]);
-
-        $acciones = array();
-        $archivos = array();
-
-        foreach($acciones_1 as $prueba) {
-            array_push($acciones,array("Id2" => $prueba->Id2, "Id" => $prueba->id, "Nombre" => $prueba->name, "Plan_Accion" => $prueba->action_plan, "Fecha_Entrega" => $prueba->date_implementation, "Estado" => $prueba->state));
-        }
-        foreach($acciones_1 as $accion) {
-            $archivos_1 = DB::select('SELECT e5.id as Id2, e3.id, e5.archive, e5.date_implementation, e5.comment, e5.detail, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-            (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id && :AcId = e3.id)', ['SujId' => $user, 'EjId' => $eje->id,'AcId' => $accion->id]);
-
-
-            foreach($archivos_1 as $prueba2) {
-                //dd((string)$prueba2->Id2, (string)$prueba2->id, (string)$prueba2->archive, (string)$prueba2->date_implementation);
-                array_push($archivos, array('Id2' => (string)$prueba2->Id2, 'Id' => (string)$prueba2->id, 'Archivo' => (string)$prueba2->archive, 'Fecha' => (string)$prueba2->date_implementation,'Comentario' => (string)$prueba2->comment, 'Detalle' => (string)$prueba2->detail, 'Estado' => (string)$prueba2->state));
-            }
-        }
-
-
-        //dd($acciones, $archivos);
+        $estrategias = Estrategia::where('eje_id', $eje->id)->get();
+        $acciones = Accion::all();
+        $compromisos = Compromiso::where('user_id', $user)->get();
         $plantilla = "Evidencias Sujeto";
-        return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'supereje' => $eje, 'acciones' => $acciones, 'archivos' => $archivos]);
-    }
 
+        return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'eje' => $eje, 'estrategias' => $estrategias, 'acciones' => $acciones, 'compromisos' => $compromisos]);
+    }
 
     public function pantalla_evidencia(User $user, Eje $eje, $id){
         //dd($user, $eje, $id);
@@ -401,7 +477,7 @@ class UserController extends Controller
             $compromiso->archive = $request->file('Buscador')->storeAs('',$nombre_archivo, 'compromisos');
             //$comprimiso->date_implementation = "$date";
             //$compromiso->Archivo = $request->file('Buscador')->store('public');
-            $compromiso->state = 0;
+            $compromiso->state = 1;
             $compromiso->detail = NULL;
             $compromiso->comment = NULL;
             $compromiso->save();
@@ -410,32 +486,14 @@ class UserController extends Controller
         //return back()->with('estado', 'Actualizado');
 
         // PASTE
-        $acciones_1 = DB::select('SELECT e5.id as Id2, e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-        (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user2, 'EjId' => $eje->id]);
-
-        $acciones = array();
-        $archivos = array();
-
-        foreach($acciones_1 as $prueba) {
-            array_push($acciones,array("Id2" => $prueba->Id2, "Id" => $prueba->id, "Nombre" => $prueba->name, "Plan_Accion" => $prueba->action_plan, "Fecha_Entrega" => $prueba->date_implementation, "Estado" => $prueba->state));
-        }
-        foreach($acciones_1 as $accion) {
-            $archivos_1 = DB::select('SELECT e5.id as Id2, e3.id, e5.archive, e5.date_implementation, e5.comment, e5.detail, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-            (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id && :AcId = e3.id)', ['SujId' => $user2, 'EjId' => $eje->id,'AcId' => $accion->id]);
-
-
-            foreach($archivos_1 as $prueba2) {
-                //dd((string)$prueba2->Id2, (string)$prueba2->id, (string)$prueba2->archive, (string)$prueba2->date_implementation);
-                array_push($archivos, array('Id2' => (string)$prueba2->Id2, 'Id' => (string)$prueba2->id, 'Archivo' => (string)$prueba2->archive, 'Fecha' => (string)$prueba2->date_implementation,'Comentario' => (string)$prueba2->comment, 'Detalle' => (string)$prueba2->detail, 'Estado' => (string)$prueba2->state));
-            }
-        }
-
-
-        //dd($acciones, $archivos);
+        $user = Auth::user()->id;
+        $ejes = Eje::all();
+        $estrategias = Estrategia::where('eje_id', $eje->id)->get();
+        $acciones = Accion::all();
+        $compromisos = Compromiso::where('user_id', $user)->get();
         $plantilla = "Evidencias Sujeto";
 
-        //return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user2, 'plantilla' => $plantilla, 'ejes' => $ejes, 'supereje' => $eje, 'acciones' => $acciones, 'archivos' => $archivos]);
-        return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user2, 'plantilla' => $plantilla, 'ejes' => $ejes, 'supereje' => $eje, 'acciones' => $acciones, 'archivos' => $archivos]);
+        return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'eje' => $eje, 'estrategias' => $estrategias, 'acciones' => $acciones, 'compromisos' => $compromisos]);
     }
 
     public function eliminar_evidencia(User $user, Eje $eje, $id){
@@ -453,31 +511,14 @@ class UserController extends Controller
 
 
         // PASTE
-        $acciones_1 = DB::select('SELECT e5.id as Id2, e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-        (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user2, 'EjId' => $eje->id]);
-
-        $acciones = array();
-        $archivos = array();
-
-        foreach($acciones_1 as $prueba) {
-            array_push($acciones,array("Id2" => $prueba->Id2, "Id" => $prueba->id, "Nombre" => $prueba->name, "Plan_Accion" => $prueba->action_plan, "Fecha_Entrega" => $prueba->date_implementation, "Estado" => $prueba->state));
-        }
-        foreach($acciones_1 as $accion) {
-            $archivos_1 = DB::select('SELECT e5.id as Id2, e3.id, e5.archive, e5.date_implementation, e5.comment, e5.detail, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-            (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id && :AcId = e3.id)', ['SujId' => $user2, 'EjId' => $eje->id,'AcId' => $accion->id]);
-
-
-            foreach($archivos_1 as $prueba2) {
-                //dd((string)$prueba2->Id2, (string)$prueba2->id, (string)$prueba2->archive, (string)$prueba2->date_implementation);
-                array_push($archivos, array('Id2' => (string)$prueba2->Id2, 'Id' => (string)$prueba2->id, 'Archivo' => (string)$prueba2->archive, 'Fecha' => (string)$prueba2->date_implementation,'Comentario' => (string)$prueba2->comment, 'Detalle' => (string)$prueba2->detail, 'Estado' => (string)$prueba2->state));
-            }
-        }
-
-
-        //dd($acciones, $archivos);
+        $user = Auth::user()->id;
+        $ejes = Eje::all();
+        $estrategias = Estrategia::where('eje_id', $eje->id)->get();
+        $acciones = Accion::all();
+        $compromisos = Compromiso::where('user_id', $user)->get();
         $plantilla = "Evidencias Sujeto";
 
-        return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user2, 'plantilla' => $plantilla, 'ejes' => $ejes, 'supereje' => $eje, 'acciones' => $acciones, 'archivos' => $archivos]);
+        return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'eje' => $eje, 'estrategias' => $estrategias, 'acciones' => $acciones, 'compromisos' => $compromisos]);
         //return back()->with(['estado' => 'Eliminado', 'deteccion' => $id]);
     }
     public function descargar_archivo($id) {
@@ -496,7 +537,7 @@ class UserController extends Controller
 
     public function user_pdf($id)
     {
-        
+
         $user = User::where('id', $id)->first();
         // $compromiso = Compromiso::where('user_id', $id)->first();
         $compromisos = Compromiso::where('user_id', $id)->get(); //si falla poner paginate();

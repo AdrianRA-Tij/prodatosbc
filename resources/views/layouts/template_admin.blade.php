@@ -100,10 +100,10 @@
                 </div>
                 <div class="sidebar-content mt-3">
                     <a href="{{ route('user.index') }}">
-                        <span><i class="fas fa-users"></i>Sujetos obligados</span>
+                        <span><i class="fas fa-users"></i>Alta SO</span>
                     </a>
                     <a href="{{ route('ejes.index') }}">
-                        <span><i class="fas fa-list"></i>Panel</span>
+                        <span><i class="fas fa-list"></i>Alta EEA</span>
                     </a>
                     <a href="{{ route('reportes.index') }}">
                         <span><i class="fa fa-file-text-o"></i>Reportes</span>

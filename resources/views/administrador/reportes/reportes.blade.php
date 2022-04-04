@@ -5,11 +5,11 @@
     <div class="text-left col ms-2">
         <label style="color: #848483 ;font-size:250%;font-family:inter;" for="">Sujetos Obligados</label>
     </div>
-    <div class="text-right col-sm-2">
+    <!-- <div class="text-right col-sm-2">
         <button type=" button" class="btn btn-primary" data-bs-toggle="modal" data-toggle="tooltip" title="generar pdf"  style="background: #059B97;"><i class="fa fa-file-image-o"></i>
             GENERAR PDF
         </button>
-    </div>
+    </div> -->
     <div class="text-right col-sm-2">
         <button type=" button" class="btn btn-primary" data-bs-toggle="modal" data-toggle="tooltip" title="Subir marca de agua" data-bs-target="#modal-marcas-agua" style="background: #059B97;"><i class="fa fa-file-image-o"></i>
             Marcas de agua
@@ -52,7 +52,7 @@
         <table class="table table-striped table-bordered" id="myTable">
             <thead>
                 <tr>
-                    <th>Seleccionar</th>
+                    <!-- <th>Seleccionar</th> -->
                     <th>ID</th>
                     <th>Sujeto Obligado</th>
                     <th>Correo electrónico</th>
@@ -73,9 +73,9 @@
 
                     @forelse ($users as $user)
                     <tr>
-                      <td style="width:5%;" class="align-top"><!--cambiar esto para pasarlo-->
-                        <input type="checkbox" class="check" id="" name="" value="" data-toggle="tooltip" title="">
-                      </td>
+                      <!--<td style="width:5%;" class="align-top">--><!--cambiar esto para pasarlo-->
+                        <!-- <input type="checkbox" class="check" id="" name="" value="" data-toggle="tooltip" title="">
+                      </td> -->
                         <td style="width:5%;" class="align-top">
                             <p>{{$user->number_user}}</p>
                         </td>

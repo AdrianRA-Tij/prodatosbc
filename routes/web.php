@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+Use App\Models\Eje;
 
 
 /*
@@ -18,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', function () {
-    return view('auth/login');
-});
+Route::get('/')->middleware('loginCheck');
 
 
 Route::get('/index', function () {
@@ -30,6 +28,7 @@ Route::get('/index', function () {
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// Route::group(['middleware' => 'prevent-back-history'],function(){
 
 Auth::routes();
 //-------------------------->ADMINISTRADOR<----------------------------------
@@ -47,7 +46,7 @@ Route::post('/ejes/nuevo_eje','EjeController@store')->name('eje.store');
 Route::put('/ejes/editar_eje/{eje}','EjeController@update')->name('eje.update');
 Route::delete('/ejes/eliminar_eje/{eje_id}','EjeController@destroy')->name('eje.destroy');
 //-------------------------->ADMINISTRADOR->ESTRATEGIAS<----------------------------------
-Use App\Models\Eje;
+
 Route::get('/estrategias', 'EstrategiaController@index')->name('estrategias.index');
 Route::get('/estrategias/nueva_estrategia', 'EstrategiaController@create')->name('estrategia.create');
 Route::post('/estrategias/nueva_estrategia','EstrategiaController@store')->name('estrategia.store');
@@ -64,7 +63,7 @@ Route::delete('/acciones/eliminar_accion/{accion_id}','AccionController@destroy'
 //-------------------------->ADMINISTRADOR->SUJETO<----------------------------------
 Route::post('panel-seguimiento/{user}', 'UserController@seguimiento')->name('sujeto.seguimiento');
 Route::post('panel-seguimiento/{user}/{eje}',  'UserController@seguimiento_eje')->name('sujeto.seguimiento.eje');
-Route::post('panel-seguimiento/{user}/{eje}/{accion}',  'UserController@seguimiento_eje_accion')->name('sujeto.seguimiento.eje.accion');
+Route::post('panel-seguimiento/{user}/{eje}/{compromiso}',  'UserController@seguimiento_eje_accion')->name('sujeto.seguimiento.eje.accion');
 Route::post('descargar/{id}','UserController@descargar_archivo')->name('descargar_archivo');
 
 //------------------------>ADMINISTRADOR->REPORTES<----------------------------------------------------
@@ -74,17 +73,18 @@ Route::get('reportes-pdf/{user}', 'UserController@user_pdf')->name('sujeto.segui
 Route::post('reportes-pdf/marcas-de-agua', 'ReportsController@store')->name('reportes.marcas.store');
 
 //-------------------------->SUJETO<----------------------------------}
-Route::get('panel-evidencias','UserController@evidencias_sujeto')->name('evidencia');
-Route::post('panel-evidencias','UserController@evidencias_sujeto')->name('evidencias');
-Route::post('panel-evidencias/{eje}','UserController@evidencias_sujeto_eje')->name('evidencias_eje');
-Route::put('panel-evidencias/{user}/{eje}/{id}','UserController@cargar_evidencia')->name('cargar_evidencia');
-Route::post('/subir-evidencia/{user}/{eje}/{id}','UserController@pantalla_evidencia')->name('pantalla_evidencia');
-Route::delete('panel-evidencias/{user}/{eje}/{id}','UserController@eliminar_evidencia')->name('evidencia.eliminar');
+Route::get('panel-evidencias','UserController@evidencias_sujeto')->name('evidencia')->middleware('esSujeto');
+Route::post('panel-evidencias','UserController@evidencias_sujeto')->name('evidencias')->middleware('esSujeto');
+Route::post('panel-evidencias/{eje}','UserController@evidencias_sujeto_eje')->name('evidencias_eje')->middleware('esSujeto');
+Route::put('panel-evidencias/{user}/{eje}/{id}','UserController@cargar_evidencia')->name('cargar_evidencia')->middleware('esSujeto');
+Route::post('/subir-evidencia/{user}/{eje}/{id}','UserController@pantalla_evidencia')->name('pantalla_evidencia')->middleware('esSujeto');
+Route::delete('panel-evidencias/{user}/{eje}/{id}','UserController@eliminar_evidencia')->name('evidencia.eliminar')->middleware('esSujeto');
 //---------------------->COMPROMISOS,-------------------------------
 //Route::get('/home','UserController@index')->middleware('auth');
-Route::get('/compromisos', 'CompromisoController@index')->name('compromiso.index');
-Route::get('/compromisos/nuevo_compromiso', 'CompromisoController@create')->name('compromiso.create');
-Route::post('/compromisos/nuevo_compromiso','CompromisoController@store')->name('compromiso.store');
-Route::put('/compromisos/editar_compromiso/{compromiso}','CompromisoController@update')->name('compromiso.update');
-Route::delete('/compromisos/eliminar_compromiso/{compromiso}','CompromisoController@destroy')->name('compromiso.destroy');
+Route::get('/compromisos', 'CompromisoController@index')->name('compromiso.index')->middleware('esSujeto');
+Route::get('/compromisos/nuevo_compromiso', 'CompromisoController@create')->name('compromiso.create')->middleware('esSujeto');
+Route::post('/compromisos/nuevo_compromiso','CompromisoController@store')->name('compromiso.store')->middleware('esSujeto');
+Route::put('/compromisos/editar_compromiso/{compromiso}','CompromisoController@update')->name('compromiso.update')->middleware('esSujeto');
+Route::delete('/compromisos/eliminar_compromiso/{compromiso}','CompromisoController@destroy')->name('compromiso.destroy')->middleware('esSujeto');
 //---------------------->EVIDENCIAS-------------------------------
+// }); //middleware PreventBackHistory

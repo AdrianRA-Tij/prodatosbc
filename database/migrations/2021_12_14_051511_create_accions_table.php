@@ -18,7 +18,7 @@ class CreateAccionsTable extends Migration
 
             $table->bigInteger('estrategia_id')->unsigned();//Variable para la relacin con la tabla user
 
-            $table->string('name');
+            $table->string('name', 500);
             //$table->text('description');
             $table->boolean('state')->nullable();
             $table->timestamps();

@@ -67,12 +67,16 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## commands
 
+---------------------------------------------------------------------------------------------------------------------
+Install dumpdf
+
+composer require barryvdh/laravel-dompdf
+
 vendor folder:
 
 composer dump-autoload
 composer install --no-scripts
 composer update
-
 
 500 server error:
 
@@ -88,6 +92,3 @@ php artisan migrate:refresh
 php artisan db:seed
 
 ----
-Install dumpdf
-
-composer require barryvdh/laravel-dompdf

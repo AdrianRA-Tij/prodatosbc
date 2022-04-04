@@ -57,6 +57,13 @@ class User extends Authenticatable
         }
         return false;
     }
+    public function esSujeto(){
+
+        if ($this->role->name == 'Sujeto obligado') {
+            return true;
+        }
+        return false;
+    }
     public function compromiso(){
         return $this->hasMany(Compromiso::class, "user_id");
     }

@@ -19,7 +19,7 @@
 
     <div class="">
         <div class="" style="background-color: #FFFFFF;">
-            <form action="{{ route('sujeto.seguimiento.eje', ['user' => $usuario, 'eje' => $supereje]) }}" method="POST">
+            <form action="{{ route('sujeto.seguimiento.eje', ['user' => $user, 'eje' => $supereje]) }}" method="POST">
                 @csrf
                 <select name="campox" id="">
                     <option value="Todo">Todo</option>
@@ -31,7 +31,6 @@
             </form>
         </div>
     </div>
-
     <div class="SeguimientoEncabezado">
         <div>
             <table class="ListaSujeto" cellspacing="0" cellpadding="0"  width="100%" >
@@ -52,108 +51,43 @@
                         <p>Estado</p>
                     </td>
                 </tr>
-                @php
-                $renglon = 0;
-                $stringconversor = ""
-                @endphp
+                @foreach ($compromisos as $compromiso)
                 @foreach ($acciones as $accion)
-
-                    @if ($renglon % 2 === 0)
-                        <tr style="background-color: #F1F1F1;">
-                            <td>
-                                @php
-                                $stringconversor = (string)$accion['Nombre']
-                                @endphp
-                                <p>{{ $stringconversor }}</p>
-                            </td>
-                            <td>
-                                @if ((string)$accion['Registro'] != NULL)
-                                    @php
-                                    $stringconversor = (int)$accion['Id']
-                                    @endphp
-                                    <form action="{{ route('sujeto.seguimiento.eje.accion', ['user' => $usuario, 'eje' => $supereje, 'accion' => $stringconversor]) }}" method="POST">
-                                        @csrf
-                                        <input type="image" src="{{url('images/Visible.png')}}" alt="">
-                                    </form>
-                                @endif
-                            </td>
-                            <td>
-                                @php
-                                $stringconversor = (string)$accion['Plan_Accion']
-                                @endphp
-                                <p>{{ $stringconversor }}</p>
-                            </td>
-                            <td>
-                                @php
-                                $stringconversor = (string)$accion['Fecha_Implementacion']
-                                @endphp
-                                <p>{{ $stringconversor }}</p>
-                            </td>
-                            <td>
-                                @php
-                                $stringconversor = (string)$accion['Estado']
-                                @endphp
-                                    @if ((string)$accion['Detalle'] == NULL && (int)$accion['Estado'] == 0)
-                                        <p><img src="{{url('images/Icon_estado0.png')}}" alt=""></p>
-                                    @elseif ((string)$accion['Detalle'] == "Incompleto" && (int)$accion['Estado'] == 0)
-                                        <p><img src="{{url('images/Icon_estado2.png')}}" alt=""></p>
-                                    @elseif ((string)$accion['Detalle'] == "Fuera de Tiempo" && (int)$accion['Estado'] == 0)
-                                        <p><img src="{{url('images/Icon_estado3.png')}}" alt=""></p>
-                                    @elseif ((string)$accion['Detalle'] == "Aceptado" && (int)$accion['Estado'] == 1)
-                                        <p><img src="{{url('images/Icon_estado1.png')}}" alt=""></p>
-                                    @endif
-                            </td>
-                        </tr>
-                    @else
-                        <tr style="background-color: #FFFFFF;">
-                        <td>
-                                @php
-                                $stringconversor = (string)$accion['Nombre']
-                                @endphp
-                                <p>{{ $stringconversor }}</p>
-                            </td>
-                            <td>
-                                @if ((string)$accion['Registro'] != NULL)
-                                    @php
-                                    $stringconversor = (int)$accion['Id']
-                                    @endphp
-                                    <form action="{{ route('sujeto.seguimiento.eje.accion', ['user' => $usuario, 'eje' => $supereje, 'accion' => $stringconversor]) }}" method="POST">
-                                        @csrf
-                                        <input type="image" src="{{url('images/Visible.png')}}" alt="">
-                                    </form>
-                                @endif
-                            </td>
-                            <td>
-                                @php
-                                $stringconversor = (string)$accion['Plan_Accion']
-                                @endphp
-                                <p>{{ $stringconversor }}</p>
-                            </td>
-                            <td>
-                                @php
-                                $stringconversor = (string)$accion['Fecha_Implementacion']
-                                @endphp
-                                <p>{{ $stringconversor }}</p>
-                            </td>
-                            <td>
-                                @php
-                                $stringconversor = (string)$accion['Estado']
-                                @endphp
-                                    @if ((string)$accion['Detalle'] == NULL && (int)$accion['Estado'] == 0)
-                                        <p><img src="{{url('images/Icon_estado0.png')}}" alt=""></p>
-                                    @elseif ((string)$accion['Detalle'] == "Incompleto" && (int)$accion['Estado'] == 0)
-                                        <p><img src="{{url('images/Icon_estado2.png')}}" alt=""></p>
-                                    @elseif ((string)$accion['Detalle'] == "Fuera de Tiempo" && (int)$accion['Estado'] == 0)
-                                        <p><img src="{{url('images/Icon_estado3.png')}}" alt=""></p>
-                                    @elseif ((string)$accion['Detalle'] == "Aceptado" && (int)$accion['Estado'] == 1)
-                                        <p><img src="{{url('images/Icon_estado1.png')}}" alt=""></p>
-                                    @endif
-                            </td>
-                        </tr>
-                    @endif
-                    @php
-                    $renglon += 1
-                    @endphp
+                @foreach ($estrategias as $estrategia)
+                @if ($compromiso->accion_id == $accion->id && $accion->estrategia_id == $estrategia->id && $estrategia->eje_id == $supereje->id)
+                <tr style="background-color: #F1F1F1;">
+                    <td>
+                        <p>{{$accion->name}}</p>
+                    </td>
+                    <td>
+                        @if ($compromiso->archive != NULL)
+                        <form action="{{ route('sujeto.seguimiento.eje.accion', ['user' => $usuario, 'eje' => $supereje, 'compromiso' => $compromiso]) }}" method="POST">
+                            @csrf
+                            <input type="image" src="{{url('images/Visible.png')}}" alt="">
+                        </form>
+                        @endif
+                    </td>
+                    <td>
+                        <p>{{$compromiso->action_plan}}</p>
+                    </td>
+                    <td>
+                        <p>Fecha...</p>
+                    </td>
+                    <td>
+                      @if ($compromiso->detail == NULL && $compromiso->state == 1)
+                          <p><img src="{{url('images/Icon_estado0.png')}}" alt=""></p>
+                      @elseif ($compromiso->detail == "Incompleto" && $compromiso->state == 1)
+                          <p><img src="{{url('images/Icon_estado2.png')}}" alt=""></p>
+                      @elseif ($compromiso->detail == "Fuera de Tiempo" && $compromiso->state == 1)
+                          <p><img src="{{url('images/Icon_estado3.png')}}" alt=""></p>
+                      @elseif ($compromiso->detail == "Aceptado" && $compromiso->state == 1)
+                          <p><img src="{{url('images/Icon_estado1.png')}}" alt=""></p>
+                      @endif
+                    </td>
+                </tr>
+                @endif
+                @endforeach
+                @endforeach
                 @endforeach
             </table>
         </div>

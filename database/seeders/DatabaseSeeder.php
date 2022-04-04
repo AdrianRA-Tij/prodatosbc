@@ -15,12 +15,12 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         \App\Models\User::create([
-            'username'   => 'Nelly Quino',
-            'email'     => 'nellyquino999@gmail.com',
+            'username'   => 'Administrador',
+            'email'     => 'administrador@gmail.com',
             'password'      => bcrypt('12345678'),
             'rol_id' => '1',
             'state' => '1',
-         ]);//Incriptamos la contrase;a 
+         ]);//Incriptamos la contrase;a
         \App\Models\User::create([
             'username'   => 'Tecate',
             'email'     => 'tecate@gmail.com',
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             'rol_id' => '2',
             'state' => '1',
             'slug' => 'Tecate',
-        ]);//Incriptamos la contrase;a 
+        ]);//Incriptamos la contrase;a
         \App\Models\Role::create([
             'name'   => 'Administrador',
         ]);
@@ -37,5 +37,5 @@ class DatabaseSeeder extends Seeder
             'name'   => 'Sujeto obligado',
         ]);
     }
-    
+
 }
