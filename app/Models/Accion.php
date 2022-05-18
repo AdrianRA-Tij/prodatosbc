@@ -9,6 +9,7 @@ class Accion extends Model
 {
     use HasFactory;
      protected $fillable = [
+        'number',
         'name',
         'estrategia_id',
         'state',

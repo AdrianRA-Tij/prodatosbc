@@ -15,6 +15,15 @@
                     @csrf
                     <div class="form-group">
                         <div class="mt-2">
+                            <label for="number" class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;"> Numero del eje</label>
+                            <input type="text" name="number" class="form-control @error('number') is-invalid @enderror" id="number" placeholder="Numero del eje"  required>{{ old('number') }}</input>
+                            @error('number')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="mt-2">
                             <label for="name" class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;"> Nombre</label>
                             <textarea type="text" name="name" cols="20" rows="5" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Nombre del eje"  required>{{ old('name') }}</textarea>
                             @error('name')

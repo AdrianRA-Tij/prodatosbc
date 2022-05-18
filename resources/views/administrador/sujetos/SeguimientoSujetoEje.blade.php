@@ -54,7 +54,8 @@
                 @foreach ($compromisos as $compromiso)
                 @foreach ($acciones as $accion)
                 @foreach ($estrategias as $estrategia)
-                @if ($compromiso->accion_id == $accion->id && $accion->estrategia_id == $estrategia->id && $estrategia->eje_id == $supereje->id)
+                @foreach ($problematicas as $problematica)
+                @if ($compromiso->accion_id == $accion->id && $accion->estrategia_id == $estrategia->id && $estrategia->problematica_id == $problematica ->id && $problematica-> eje_id == $supereje->id)
                 <tr style="background-color: #F1F1F1;">
                     <td>
                         <p>{{$accion->name}}</p>
@@ -86,6 +87,7 @@
                     </td>
                 </tr>
                 @endif
+                @endforeach
                 @endforeach
                 @endforeach
                 @endforeach

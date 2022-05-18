@@ -46,14 +46,18 @@ class EjeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'number' => ['required', 'string', 'max:255', 'unique:ejes', ],
             'name' => ['required', 'string', 'max:255', 'unique:ejes', ],
             'description' => ['required', 'string'],
         ],[
+            'number.required'=> 'El campo numero del eje es obligatorio.',
             'description.required'=> 'El campo objetivo es obligatorio.',
-            'name.unique' => 'El eje ya existe'
+            'name.unique' => 'El eje ya existe',
+            'number.unique' => 'El eje ya existe'
         ]);
 
         Eje::create([
+            'number' => $request->number,
             'name' => $request->name,
             'description' => $request->description,
             'state' => '1',
@@ -94,13 +98,16 @@ class EjeController extends Controller
     public function update(Request $request, Eje $eje)
     {
         $request->validate([
+            'number' => ['required', 'string', 'max:255',],
             'name' => ['required', 'string', 'max:255',],
             'description' => ['required', 'string'],
         ],[
+            'number.required'=> 'El campo numero del eje es obligatorio.',
             'description.required'=> 'El campo objetivo es obligatorio.',
         ]);
         $eje->update([
-           'name' => request('name'),
+            'number' => $request->number,
+            'name' => request('name'),
             'description' => request('description'),
 
         ]);

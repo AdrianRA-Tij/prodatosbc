@@ -19,8 +19,6 @@ class CreateCompromisosTable extends Migration
             $table->bigInteger('user_id')->unsigned();//Variable para la relacin con la tabla user
             $table->bigInteger('accion_id')->unsigned();//Variable para la relacin con la tabla acciones
             $table->text('action_plan');
-            $table->string('responsable')->nullable();//
-            $table->string('position')->nullable();
             $table->boolean('state')->nullable();
             $table->string('detail')->nullable();//
             $table->string('archive')->nullable();

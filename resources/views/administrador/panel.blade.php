@@ -7,10 +7,14 @@
             font-weight: bold !important;
             text-decoration: none !important;
         }
+
+        a:hover{
+            color: #c64890 !important;
+        }
 </style>
 
 <div class="text-left col-sm-8">
-    <label style="color: #848483 ;font-size:250%;font-family:inter;" for="">Panel</label>
+    <label style="color: #848483 ;font-size:250%;font-family:inter;" for="">Alta EPEA</label>
 </div>
 <div>
 
@@ -18,6 +22,9 @@
             <ul class="navbar-nav">
                 <li  class=" {{ setActive('ejes.index') }} " >
                    <a  class="nav-link" style="font-size:150%;font-family:inter; color: white"  href="{{ route('ejes.index') }}">Ejes</a>
+                </li>
+                <li  class=" {{ setActive('problematicas.index') }} " >
+                   <a  class="nav-link" style="font-size:150%;font-family:inter; color: white"  href="{{ route('problematicas.index') }}">Problematicas</a>
                 </li>
                 <li  class="{{ setActive('estrategias.index') }} ">
                     <a  class="nav-link"  style="font-size:150%;font-family:inter; color: white"  href="{{ route('estrategias.index') }}">Estrategias</a>

@@ -12,24 +12,6 @@
                 </div>
                 @livewire('eje-estrategia-accion')
                 <div class="mt-2">
-                    <label for="responsable" class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;">Servidor público</label>
-                    <input type="text" name="responsable" class="form-control @error('responsable') is-invalid @enderror" id="responsable" placeholder="Nombre del servidor público responsable" value="{{old('responsable')}}">
-                    @error('responsable')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-                <div class="mt-2">
-                    <label for="position" class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;">Cargo</label>
-                    <input type="text" name="position" class="form-control @error('position') is-invalid @enderror" id="position" placeholder="Cargo del servidor público responsable" value="{{old('position')}}">
-                    @error('position')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-                <div class="mt-2">
                     <label for="action_plan" class=" col-form-label" style="font-size:120%;font-family:inter;">Descripción de la actividad</label>
                     <textarea name="action_plan" id="action_plan" type="text" class="form-control @error('action_plan') is-invalid @enderror" rows="8" placeholder="Descripción de la actividad que da cumplimiento a la línea de acción">{{old('action_plan')}}</textarea>
                     @error('action_plan')

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEjesTable extends Migration
+class CreateProblematica extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateEjesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ejes', function (Blueprint $table) {
+        Schema::create('problematicas', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('eje_id')->unsigned();
             $table->string('number');
             $table->string('name');
-            $table->text('description');
             $table->boolean('state')->nullable();
             $table->timestamps();
+
+            $table->foreign('eje_id')->references('id')->on('ejes')->onDelete("cascade");
         });
     }
 
@@ -30,6 +32,6 @@ class CreateEjesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ejes');
+        Schema::dropIfExists('problematicas');
     }
 }

@@ -29,24 +29,6 @@
                             </select>
                         </div>
                         <div>
-                            <label for="responsable">Servidor publico</label>
-                            <input type="text" name="responsable" class="form-control @error('responsable') is-invalid @enderror" id="responsable"  value="{{ $compromiso -> responsable }}">
-                            @error('responsable')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div>
-                            <label for="position">Cargo</label>
-                            <input type="text" name="position" class="form-control @error('position') is-invalid @enderror" id="position" value="{{$compromiso->position}}">
-                            @error('position')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div>
                             <label for="action_plan">Plan de accion</label>
                             <textarea  name="action_plan" id="action_plan"  class="form-control @error('action_plan') is-invalid @enderror" type="text" rows="8" >{{$compromiso->action_plan}}</textarea>
                             @error('action_plan')

@@ -47,14 +47,17 @@ class AccionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'number' => ['required', 'string', 'max:255',],
             'name' => ['required', 'string', 'max:500', 'unique:accions'], //'max:255',
             'estrategia_id' => ['required'],
         ],[
+             'number.required'=> 'El campo numero de la accion es obligatorio.',
              'estrategia_id.required' => 'El campo línea estratégica es obligatorio',
              'name.unique' => 'La línea de acción ya existe'
         ]);
 
         Accion::create([
+            'number' => $request->number,
             'name' => $request->name,
             'estrategia_id' => $request->estrategia_id,
             'state' => '1',
@@ -96,6 +99,7 @@ class AccionController extends Controller
     public function update(Request $request, Accion $accion)
     {
         $request->validate([
+            'number' => ['required', 'string', 'max:255',],
             'name' => ['required', 'max:500', 'string'], //, 'max:255'
             'estrategia_id' => ['required'],
         ],[
@@ -103,6 +107,7 @@ class AccionController extends Controller
         ]);
 
         $accion->update([
+            'number' => request('number'),
             'name' => request('name'),
             'description' => request('description'),
             'estrategia_id' =>request('estrategia_id'),

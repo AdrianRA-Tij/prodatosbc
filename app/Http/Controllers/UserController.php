@@ -8,6 +8,7 @@ use App\Models\Accion;
 use App\Models\Estrategia;
 use App\Models\Eje;
 use App\Models\Compromiso;
+use App\Models\Problematica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -78,10 +79,13 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'number_user' => 'required|string|size:5|unique:users',
+            'user' => 'required|string|max:255|unique:users',
+            'name' => 'required|string|max:255',
         ],[
             'number_user.required' => 'El campo ID es obligatorio.',
             'number_user.unique' => 'Ya existe un registro con este ID.',
             'number_user.size' => 'El campo ID debe contener al menos 5 caracteres.',
+            'user.unique' => 'Ya existe un registro con este usuario.',
 
         ]);
         //Crear usuarios insersion en la BD
@@ -92,7 +96,11 @@ class UserController extends Controller
             'number_user' => $request->number_user,
             'slug' =>  Str::slug($request->username, "-"),
             'rol_id' => '2',
-            'state' => '1'
+            'state' => '1',
+            'user' => $request->user,
+            'name' => $request->name
+
+
 
             //Comando para incriptar las contrase;as bcrypt
         ]);
@@ -152,6 +160,8 @@ class UserController extends Controller
             'username' => request('username'),
             'email' => request('email'),
             'number_user' => request('number_user'),
+            'user' => request('user'),
+            'name' => request('name'),
 
          ]);
 
@@ -278,7 +288,8 @@ class UserController extends Controller
     public function seguimiento_eje(Request $request, User $user, Eje $eje) {
         $usuario = $user->id;
         $ejes = Eje::All();
-        $estrategias = Estrategia::where('eje_id', $eje->id)->get();
+        $problematicas = Problematica::where('eje_id', $eje->id)->get();
+        $estrategias = Estrategia::all();
         $acciones = Accion::all();
         $plantilla = "Seguimiento Sujeto";
 
@@ -295,7 +306,7 @@ class UserController extends Controller
             $compromisos = Compromiso::where('user_id', $usuario)->where('state', 1)->where('detail', 'Aceptado')->get();
         }
 
-        return view('administrador.sujetos.SeguimientoSujetoEje', ['usuario' => $user, 'user' => $usuario, 'plantilla' => $plantilla, 'ejes' => $ejes, 'supereje' => $eje, 'estrategias' => $estrategias, 'acciones' => $acciones, 'compromisos' => $compromisos]);
+        return view('administrador.sujetos.SeguimientoSujetoEje', ['usuario' => $user, 'user' => $usuario, 'plantilla' => $plantilla, 'ejes' => $ejes, 'supereje' => $eje, 'problematicas' => $problematicas, 'estrategias' => $estrategias, 'acciones' => $acciones, 'compromisos' => $compromisos]);
 
     }
     // public function seguimiento_eje_accion(Request $request, User $user, Eje $eje, Accion $accion) {
@@ -416,12 +427,13 @@ class UserController extends Controller
         // $user = User::where('id', $id)->first();
         $user = Auth::user()->id;
         $ejes = Eje::all();
-        $estrategias = Estrategia::where('eje_id', $eje->id)->get();
+        $problematicas = Problematica::where('eje_id', $eje->id)->get();
+        $estrategias = Estrategia::all();
         $acciones = Accion::all();
         $compromisos = Compromiso::where('user_id', $user)->get();
         $plantilla = "Evidencias Sujeto";
 
-        return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'eje' => $eje, 'estrategias' => $estrategias, 'acciones' => $acciones, 'compromisos' => $compromisos]);
+        return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'eje' => $eje, 'problematicas' => $problematicas,'estrategias' => $estrategias, 'acciones' => $acciones, 'compromisos' => $compromisos]);
     }
 
     public function pantalla_evidencia(User $user, Eje $eje, $id){
@@ -432,8 +444,8 @@ class UserController extends Controller
         $date = date('Y-m-d H:i:s');
 
         // PASTE
-        $acciones_1 = DB::select('SELECT e5.id as Id2, e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-        (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user2, 'EjId' => $eje->id]);
+        $acciones_1 = DB::select('SELECT e5.id as Id2, e3.id, e3.name, e5.action_plan, e5.date_implementation, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5, problematicas as e6 WHERE
+        (e1.id = e2.problematica_id && e6.eje_id = e1.id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id)', ['SujId' => $user2, 'EjId' => $eje->id]);
 
         $acciones = array();
         $archivos = array();
@@ -442,8 +454,8 @@ class UserController extends Controller
             array_push($acciones,array("Id2" => $prueba->Id2, "Id" => $prueba->id, "Nombre" => $prueba->name, "Plan_Accion" => $prueba->action_plan, "Fecha_Entrega" => $prueba->date_implementation, "Estado" => $prueba->state));
         }
         foreach($acciones_1 as $accion) {
-            $archivos_1 = DB::select('SELECT e5.id as Id2, e3.id, e5.archive, e5.date_implementation, e5.comment, e5.detail, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5 WHERE
-            (e1.id = e2.eje_id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id && :AcId = e3.id)', ['SujId' => $user2, 'EjId' => $eje->id,'AcId' => $accion->id]);
+            $archivos_1 = DB::select('SELECT e5.id as Id2, e3.id, e5.archive, e5.date_implementation, e5.comment, e5.detail, e5.state FROM ejes as e1, estrategias as e2, accions as e3, users as e4, compromisos as e5, problematicas as e6 WHERE
+            (e1.id = e2.problematica_id && e6.eje_id = e1.id && e2.id = e3.estrategia_id && e3.id = e5.accion_id && e4.id = e5.user_id) && (:SujId = e4.id && :EjId = e1.id && :AcId = e3.id)', ['SujId' => $user2, 'EjId' => $eje->id,'AcId' => $accion->id]);
 
 
             foreach($archivos_1 as $prueba2) {
@@ -475,7 +487,7 @@ class UserController extends Controller
             //$compromiso->Archivo = $request->file('Buscador')->store('','compromisos'); // Nombre_Aleatorio de archivo
             $nombre_archivo = time().'-'.$request->file('Buscador')->getClientOriginalName();
             $compromiso->archive = $request->file('Buscador')->storeAs('',$nombre_archivo, 'compromisos');
-            //$comprimiso->date_implementation = "$date";
+            $compromiso->date_delivery = date('Y-m-d H:i:s');
             //$compromiso->Archivo = $request->file('Buscador')->store('public');
             $compromiso->state = 1;
             $compromiso->detail = NULL;
@@ -488,12 +500,13 @@ class UserController extends Controller
         // PASTE
         $user = Auth::user()->id;
         $ejes = Eje::all();
-        $estrategias = Estrategia::where('eje_id', $eje->id)->get();
+        $problematicas = Problematica::where('eje_id', $eje->id)->get();
+        $estrategias = Estrategia::all();
         $acciones = Accion::all();
         $compromisos = Compromiso::where('user_id', $user)->get();
         $plantilla = "Evidencias Sujeto";
 
-        return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'eje' => $eje, 'estrategias' => $estrategias, 'acciones' => $acciones, 'compromisos' => $compromisos]);
+        return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'eje' => $eje, 'problematicas' => $problematicas, 'estrategias' => $estrategias, 'acciones' => $acciones, 'compromisos' => $compromisos]);
     }
 
     public function eliminar_evidencia(User $user, Eje $eje, $id){
@@ -513,12 +526,13 @@ class UserController extends Controller
         // PASTE
         $user = Auth::user()->id;
         $ejes = Eje::all();
-        $estrategias = Estrategia::where('eje_id', $eje->id)->get();
+        $problematicas = Problematica::where('eje_id', $eje->id)->get();
+        $estrategias = Estrategia::all();
         $acciones = Accion::all();
         $compromisos = Compromiso::where('user_id', $user)->get();
         $plantilla = "Evidencias Sujeto";
 
-        return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'eje' => $eje, 'estrategias' => $estrategias, 'acciones' => $acciones, 'compromisos' => $compromisos]);
+        return view('sujeto.EvidenciasSujetoEje', ['usuario' => $user, 'plantilla' => $plantilla, 'ejes' => $ejes, 'eje' => $eje, 'problematicas' => $problematicas, 'estrategias' => $estrategias, 'acciones' => $acciones, 'compromisos' => $compromisos]);
         //return back()->with(['estado' => 'Eliminado', 'deteccion' => $id]);
     }
     public function descargar_archivo($id) {
@@ -539,10 +553,16 @@ class UserController extends Controller
     {
 
         $user = User::where('id', $id)->first();
+
+        $ejes = Eje::all();
+        $problematicas = Problematica::all();
+        $estrategias = Estrategia::all();
+        $acciones = Accion::all();
+        
         // $compromiso = Compromiso::where('user_id', $id)->first();
         $compromisos = Compromiso::where('user_id', $id)->get(); //si falla poner paginate();
 
-        $pdf = PDF::loadView('administrador.sujetos.pdf', ['user'=>$user,'compromisos'=>$compromisos]);
+        $pdf = PDF::loadView('administrador.sujetos.pdf', ['user'=>$user,'compromisos'=>$compromisos, 'ejes'=>$ejes, 'estrategias'=>$estrategias, 'acciones'=>$acciones, 'problematicas'=>$problematicas]);
         // $pdf->loadHTML('<h1>Test</h1>');
         return $pdf->stream();
         // return view('administrador.sujetos.pdf', compact('user','compromisos'));

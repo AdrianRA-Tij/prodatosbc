@@ -16,8 +16,17 @@
                     <div class="form-group">
 
                         <div  class="mt-2">
+                            <label for="number_user"  class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;">ID </label>
+                            <input name="number_user" type="text" id="number_user"  class="form-control  @error('number_user') is-invalid @enderror"  placeholder="ID del sujeto obligado" value="{{ old('number_user') }}" required>
+                            @error('number_user')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div  class="mt-2">
                             <label for="username"  class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;">Sujeto obligado</label>
-                            <textarea type="text"  id="username" name="username" cols="20" rows="5" class="form-control @error('username') is-invalid @enderror" placeholder="Nombre del sujeto obligado"  required>{{ old('username') }}</textarea>
+                            <textarea type="text"  id="username" name="username" cols="20" rows="1" class="form-control @error('username') is-invalid @enderror" placeholder="Nombre del sujeto obligado"  required>{{ old('username') }}</textarea>
                             @error('username')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -25,18 +34,9 @@
                             @enderror
                         </div>
                         <div  class="mt-2">
-                            <label for="email"  class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;">Correo electónico </label>
-                            <input name="email" type="email" id="email"  class="form-control  @error('email') is-invalid @enderror"  placeholder="Correo electónico del sujeto obligado" value="{{ old('email') }}" required>
-                            @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div  class="mt-2">
-                            <label for="number_user"  class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;">ID </label>
-                            <input name="number_user" type="text" id="number_user"  class="form-control  @error('number_user') is-invalid @enderror"  placeholder="ID del sujeto obligado" value="{{ old('number_user') }}" required>
-                            @error('number_user')
+                            <label for="user"  class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;">Usuario del SO</label>
+                            <input type="text"  id="user" name="user" class="form-control @error('user') is-invalid @enderror" placeholder="Usuario del sujeto obligado" value="{{ old('user') }}" required>
+                            @error('user')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -55,6 +55,24 @@
                             <label for="password-confirm" class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;">Confirmar contraseña</label>
                             <input id="password-confirm" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" placeholder="Confirmar contraseña" autocomplete="new-password" required>
                             @error('password_confirmation')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div  class="mt-2">
+                            <label for="name" class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;">Nombre del oficial</label>
+                            <input type="text" minlength="8" id="name" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Nombre del oficial de protección de datos personales " value="{{ old('name') }}" required>
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div  class="mt-2">
+                            <label for="email"  class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;">Correo electónico </label>
+                            <input name="email" type="email" id="email"  class="form-control  @error('email') is-invalid @enderror"  placeholder="Correo electónico del sujeto obligado" value="{{ old('email') }}" required>
+                            @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

@@ -3,7 +3,11 @@
 }
 
 body {
-    margin: 6.5cm 2.5cm 4cm 2.5cm;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 27%;
+    margin-bottom: 15%;
+    width: 80%;
 }
 
 h1 {
@@ -14,9 +18,7 @@ h1 {
     margin-left: 70px;
 }
 
-td {
-    color: black;
-}
+
 
 #titulo {
     font-size: 20px;
@@ -45,11 +47,11 @@ footer{
 }
 
 .container{
-    height: 400px;
-    
+    height: 200px;
 }
 .container img{
     margin-top: 60px;
     margin-right: 50px;
     float: right
 }
+

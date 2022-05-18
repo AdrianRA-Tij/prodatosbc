@@ -25,6 +25,15 @@
             <div class="modal-body">
                 <div class="form-group">
                     <div class="mt-2">
+                        <label for="number" class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;"> Numero de la accion</label>
+                        <input type="text" name="number" class="form-control @error('number') is-invalid @enderror" id="number" placeholder="Numero de la Accion"  required value="{{ old('number', $accion->number) }}"></input>
+                        @error('number')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="mt-2">
                         <label for="name" class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;"> Nombre</label>
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name', $accion->name) }}" required>
                         @error('name')

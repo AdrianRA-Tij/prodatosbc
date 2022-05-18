@@ -4,7 +4,8 @@
 @foreach ($compromisos as $compromiso)
 @foreach ($acciones as $accion)
 @foreach ($estrategias as $estrategia)
-    @if ($compromiso->accion_id == $accion->id && $accion->estrategia_id == $estrategia->id && $estrategia->eje_id == $eje->id)
+@foreach ($problematicas as $problematica)
+    @if ($compromiso->accion_id == $accion->id && $accion->estrategia_id == $estrategia->id && $estrategia->problematica_id == $problematica ->id && $problematica-> eje_id == $eje->id)
         <div style="margin:20px;">
             <table class="ListaSujeto" cellspacing="0" cellpadding="0"  width="100%">
                 <tr style="background-color: #FFFFFF;">
@@ -62,6 +63,7 @@
             @endif
         </div>
     @endif
+@endforeach
 @endforeach
 @endforeach
 @endforeach

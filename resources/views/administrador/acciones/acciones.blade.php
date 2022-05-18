@@ -43,9 +43,9 @@
                 @endphp
                 @foreach($acciones as $accion)
                 <tr>
-                    <td style="width:25%;" class="align-top">{{$accion -> estrategia -> eje -> name}}</td>
-                    <td style="width:25%;" class="align-top">{{$accion -> estrategia -> name}}</td>
-                    <td style="width:40%;" class="align-top">{{$accion -> name}}</td>
+                    <td style="width:25%;" class="align-top">{{$accion -> estrategia -> problematica-> eje -> number}} {{$accion -> estrategia -> problematica-> eje -> name}}</td>
+                    <td style="width:25%;" class="align-top">{{$accion -> estrategia -> number}} {{$accion -> estrategia -> name}}</td>
+                    <td style="width:40%;" class="align-top">{{$accion -> number}} {{$accion -> name}}</td>
                     <td style="width:5%;">
                         <a type="button" class="btn btn-primary" style="background: #059B97;" href="{{ route('accion.edit', $accion->id) }}"> <i class="fas fa-edit"></i></a>
                     </td>

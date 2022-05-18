@@ -25,7 +25,15 @@
         <form action="{{ route('accion.store') }}" method="POST">
             @csrf
             <div class="form-group">
-                <div class="mt-2">
+                    <div class="mt-2">
+                        <label for="number" class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;"> Numero de la Accion</label>
+                        <input type="text" name="number" class="form-control @error('number') is-invalid @enderror" id="number" placeholder="Numero de la Accion"  required>{{ old('number') }}</input>
+                        @error('number')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
                     <label for="name" class="col-md-4 col-form-label" style="font-size:120%;font-family:inter;"> Nombre</label>
                     <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Nombre de la linea de acción" value="{{ old('name') }}" required>
                     @error('name')

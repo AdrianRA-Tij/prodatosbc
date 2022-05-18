@@ -10,8 +10,6 @@ class Compromiso extends Model
     use HasFactory;
     protected $fillable = [
         'action_plan',
-        'responsable',
-        'position',
         'user_id',
         'accion_id',
         'state',

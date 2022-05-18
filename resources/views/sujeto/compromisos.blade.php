@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="text-left col-md-5 mt-2">
-    <label style="color: #848483 ;font-size:200%;font-family:inter;" for="">Implementación</label>
+    <label style="color: #848483 ;font-size:200%;font-family:inter;" for="">R. Compromisos</label>
 </div>
 <div class="container-fluid">
     <div class="form-group">
@@ -28,20 +28,22 @@
 
                     <thead>
                         <tr>
-                            <th>Línea de acción</th>
+                            <th>Eje</th>
+                            <th>Problematica</th>
+                            <th>Estrategia</th>
+                            <th>Accion</th>
                             <th>Descripción de la actividad</th>
-                            <th>Nombre del servidor público</th>
-                            <th>Cargo del servidor público</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($compromisos as $compromiso)
                         <tr>
-                            <td class="align-top" style="width:20%;">{{$compromiso -> accion ->name}}</td>
-                            <td class="align-top" style="width:20%;">{{$compromiso -> action_plan}}</td>
-                            <td class="align-top" style="width:30%;">{{$compromiso -> responsable}}</td>
-                            <td class="align-top" style="width:20%;">{{$compromiso -> position }}</td>
+                            <td class="align-top" style="width:10%;">{{$compromiso -> accion -> estrategia -> problematica -> eje ->number}}</td>
+                            <td class="align-top" style="width:10%;">{{$compromiso -> accion -> estrategia -> problematica ->number}}</td>
+                            <td class="align-top" style="width:10%;">{{$compromiso -> accion -> estrategia ->number}}</td>
+                            <td class="align-top" style="width:10%;">{{$compromiso -> accion ->number}}</td>
+                            <td class="align-top" style="width:60%;">{{$compromiso -> action_plan}}</td>
                             <td style="width:5%;">
                                 <button type="button" class="btn btn-primary md-2" data-toggle="tooltip" title="Editar compromiso" data-bs-toggle="modal" data-bs-target="#modal-editar-compromiso-{{ $compromiso->id }}" style="background: #059B97;"> <i class="fas fa-edit"></i></button>
                             </td>

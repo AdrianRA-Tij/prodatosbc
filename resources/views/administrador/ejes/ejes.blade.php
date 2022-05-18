@@ -47,7 +47,8 @@
         <table class="table table-striped table-bordered" id="myTable">
             <thead>
                 <tr>
-                    <th style="width:20%;">Eje</th>
+                    <th style="width:20%;">Numero del Eje</th>
+                    <th style="width:20%;">Nombre del Eje</th>
                     <th style="width:70%;">Objetivo</th>
                     <th>Opciones</th>
                 </tr>
@@ -59,6 +60,7 @@
                 @endphp
                 @foreach($ejes as $eje)
                 <tr>
+                    <td>{{ $eje->number }}</td>
                     <td>{{ $eje->name }}</td>
                     <td class="align-top"> {{ $eje->description}}</td>
                     <td style="width:5%;">

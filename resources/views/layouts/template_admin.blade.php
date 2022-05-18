@@ -17,6 +17,11 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <script>
+function myFunction() {
+  alert("Por seguridad, cierre todas las pestañas de PRODATOSBC");
+}
+</script>
     <meta name="theme-color" content="#7952b3">
 
     <style>
@@ -35,14 +40,20 @@
         }
     </style>
     <style>
-        .active a {
-            color: #BD3284;
-            font-weight: bold;
-            text-decoration: none;
+        .active span{
+            background-color: #BD3284 !important;
+            font-weight: bold !important;
+            text-decoration: none !important;
         }
-    </style>
 
+        .nav-new {
+  display: block;
+  color: #0d6efd;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
 
+</style>
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{url('css/Estilos.css?v=').time()}}">
@@ -54,18 +65,16 @@
         <div class="container-fluid d-flex align-items-center">
             <img src="{{ asset('/images/logo_PRODATOS.fw.png') }}" width="300" height="150" alt="Bootstrap">
             <p class="h1 ms-auto" style="font-family: Inter; color:#BD3284;">Pizarra de avances</p>
-
             <button class="btn btn-light dropdown-toggle ms-auto" data-toggle="tooltip" title="Cerrar sesión" style="color: #059B97" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false"></button>
             <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                <a class="dropdown-item" href="{{ route('logout.perform') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit(); myFunction();">
                     {{ __('Salir') }}
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                <form id="logout-form" action="{{ route('logout.perform') }}" method="POST" class="d-none">
                     @csrf
                 </form>
             </ul>
-
         </div>
         </div>
     </header>
@@ -99,7 +108,32 @@
                     </ul>
                 </div>
                 <div class="sidebar-content mt-3">
-                    <a href="{{ route('user.index') }}">
+                    <ul class="navbar-nav" style="display: flex;">
+                        <li  class=" {{ setActive('user.index') }} " >
+                            
+                            <a href="{{ route('user.index') }}" class="nav-new">
+                                <span> <i class="fas fa-users"></i>Alta SO </span>
+                            </a>
+                            
+                        </li>
+                        <li  class=" {{ setActive('ejes.index') }} {{ setActive('problematicas.index') }} {{ setActive('estrategias.index') }}  {{ setActive('acciones.index') }}" >
+                            
+                            <a href="{{ route('ejes.index') }}" class="nav-new">
+                       <span> <i class="fas fa-list"></i>Alta EPEA </span> 
+                    </a>
+                            
+                        
+                        </li>
+                        <li  class=" {{ setActive('reportes.index') }} " >
+                            
+                            <a href="{{ route('reportes.index') }}" class="nav-new"> 
+                        <span> <i class="fa fa-file-text-o"></i>Reportes </span>
+                    </a>
+                            
+                        
+                        </li>
+                    </ul>
+                    <!-- <a href="{{ route('user.index') }}">
                         <span><i class="fas fa-users"></i>Alta SO</span>
                     </a>
                     <a href="{{ route('ejes.index') }}">
@@ -107,7 +141,7 @@
                     </a>
                     <a href="{{ route('reportes.index') }}">
                         <span><i class="fa fa-file-text-o"></i>Reportes</span>
-                    </a>
+                    </a> -->
                 </div>
             </nav>
             <!--Fin Siderbar-->

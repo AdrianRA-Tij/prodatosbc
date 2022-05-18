@@ -3,11 +3,11 @@
 @section('panel_content')
 <div class="row justify-content-end mt-3">
     <div class="text-left col ms-2">
-        <label style="color: #848483 ;font-size:180%;font-family:inter;" for="">Líneas estratégicas registradas</label>
+        <label style="color: #848483 ;font-size:180%;font-family:inter;" for="">Problematicas registradas</label>
     </div>
     <div class="text-right col-sm-2">
-        <a type="button" class="btn btn-primary" style="background: #059B97;"  href="{{ route('estrategia.create') }}"><i class="fas fa-plus"></i>
-            Agregar estrategia
+        <a type="button" class="btn btn-primary" style="background: #059B97; font-size: 15px"  href="{{ route('problematica.create') }}"><i class="fas fa-plus"></i>
+            Agregar Problematica
         </a>
     </div>
 </div>
@@ -31,7 +31,6 @@
                 <tr>
                     <th>Eje</th>
                     <th>Problemática</th>
-                    <th>Línea estratégica</th>
                     <th>Opciones</th>
                 </tr>
             </thead>
@@ -40,22 +39,21 @@
                 $row = 0;
                 $buttonName = "button_eliminar_";
                 @endphp
-                @foreach($estrategias as $estrategia)
+                @foreach($problematicas as $problematica)
                 <tr>
-                    <td style="width:20%;" class="align-top"> {{ $estrategia-> problematica-> eje -> number}} {{ $estrategia-> problematica-> eje -> name}}</td>
-                    <td style="width:40%;" class="align-top"> {{ $estrategia-> problematica-> number}} {{ $estrategia-> problematica->name}}</td>
-                    <td style="width:30%;" class="align-top">{{ $estrategia->number }} {{ $estrategia->name }}</td>
+                    <td style="width:20%;" class="align-top"> {{ $problematica-> eje -> number}} {{ $problematica-> eje -> name}}</td>
+                    <td style="width:40%;" class="align-top"> {{ $problematica-> number}} {{ $problematica->name}}</td>
                     <td style="width:5%;">
-                        <a type="button" class="btn btn-primary" style="background: #059B97;"  href="{{ route('estrategia.edit', $estrategia->id) }}"> <i class="fas fa-edit"></i></a>
+                        <a type="button" class="btn btn-primary" style="background: #059B97;"  href="{{ route('problematica.edit', $problematica->id) }}"> <i class="fas fa-edit"></i></a>
                     </td>
                     <td style="width:5%;">
                     @php
                         $btnNameRow = $buttonName.$row;
                         $row += 1;
                         @endphp
-                        <button type="button" id="<?php echo $btnNameRow; ?>" disabled class="btn btn-danger" data-toggle="tooltip" title="Eliminar" data-bs-toggle="modal" data-bs-target="#modal-eliminar-estrategia-{{ $estrategia->id }}"><i class="fas fa-trash-alt"></i></button>
+                        <button type="button" id="<?php echo $btnNameRow; ?>" disabled class="btn btn-danger" data-toggle="tooltip" title="Eliminar" data-bs-toggle="modal" data-bs-target="#modal-eliminar-problematica-{{ $problematica->id }}"><i class="fas fa-trash-alt"></i></button>
 
-                        @include('administrador.estrategias.eliminar_estrategia')
+                        @include('administrador.problematicas.eliminar_problematica')
 
                     </td>
                 </tr>
@@ -65,7 +63,7 @@
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
-                    {{$estrategias->links()}}
+                    {{$problematicas->links()}}
                 </li>
             </ul>
         </nav>

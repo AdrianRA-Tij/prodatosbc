@@ -14,9 +14,18 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- <script>
+window.addEventListener('popstate', function(event) {
+	history.pushState(null, null, window.location.pathname);
+	history.pushState(null, null, window.location.pathname);
+	}, false);
+</script> -->
 </head>
 
 <body style="background:#F3F3F3;">
+<!-- <div class="alert alert-danger" role="alert">
+  <h1> CIERRA LAS PESTAÑAS PUERCO</h1>A simple danger alert—check it out!
+</div> -->
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 row justify-content-center">
@@ -29,8 +38,8 @@
                             @csrf
                             <div class="input-group mt-4">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user mt-3"></i></span>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror input-lg" name="email" placeholder="Correo" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                @error('email')
+                                <input id="user" type="text" class="form-control @error('user') is-invalid @enderror input-lg" name="user" placeholder="Usuario" value="{{ old('user') }}" required autocomplete="user" autofocus>
+                                @error('user')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -58,9 +67,5 @@
             </div>
         </div>
     </div>
-
-
-
     <script src="{{ asset('js/bootstrap.js') }}" defer></script>
-
 </body>

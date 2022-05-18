@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         \App\Models\User::create([
             'username'   => 'Administrador',
+            'user'   => 'administrador',
             'email'     => 'administrador@gmail.com',
             'password'      => bcrypt('12345678'),
             'rol_id' => '1',
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
          ]);//Incriptamos la contrase;a
         \App\Models\User::create([
             'username'   => 'Tecate',
+            'user'   => 'AY001-TEC',
             'email'     => 'tecate@gmail.com',
             'password'      => bcrypt('12345678'),
             'number_user' => '220115',

@@ -3,7 +3,7 @@
 @section('content')
 <div class="row justify-content-end">
     <div class="text-left col ms-2">
-        <label style="color: #848483 ;font-size:250%;font-family:inter;" for="">Sujetos Obligados</label>
+        <label style="color: #848483 ;font-size:250%;font-family:inter;" for="">Reportes</label>
     </div>
     <!-- <div class="text-right col-sm-2">
         <button type=" button" class="btn btn-primary" data-bs-toggle="modal" data-toggle="tooltip" title="generar pdf"  style="background: #059B97;"><i class="fa fa-file-image-o"></i>
